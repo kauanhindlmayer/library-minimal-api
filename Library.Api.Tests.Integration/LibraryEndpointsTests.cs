@@ -1,13 +1,12 @@
 ﻿using System.Net;
 using FluentAssertions;
 using Library.Api.Models;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
 namespace Library.Api.Tests.Integration;
 
-public class LibraryEndpointsTests(WebApplicationFactory<IApiMarker> factory)
-    : IClassFixture<WebApplicationFactory<IApiMarker>>, IAsyncLifetime
+public class LibraryEndpointsTests(LibraryApiFactory factory)
+    : IClassFixture<LibraryApiFactory>, IAsyncLifetime
 {
     private readonly List<string> _createdIsbns = [];
 
