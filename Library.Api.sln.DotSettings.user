@@ -1,0 +1,11 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=372dd47e_002Dca11_002D4e89_002D95b3_002D9e15bcd21818/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateBook_CreatesBook_WhenDataIsCorrect" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::5AB42DA4-EC56-4418-8A48-BBF7F5D8811D::net8.0::Library.Api.Tests.Integration.LibraryEndpointsTests.CreateBook_CreatesBook_WhenDataIsCorrect&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=73ae645c_002D049b_002D4667_002Dac8a_002D7c4fa8875704/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateBook_CreatesBook_WhenDataIsCorrect #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::5AB42DA4-EC56-4418-8A48-BBF7F5D8811D::net8.0::Library.Api.Tests.Integration.LibraryEndpointsTests.CreateBook_CreatesBook_WhenDataIsCorrect&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
