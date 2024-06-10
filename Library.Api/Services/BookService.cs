@@ -8,11 +8,11 @@ public class BookService(IDbConnectionFactory dbConnectionFactory) : IBookServic
 {
     public async Task<bool> CreateAsync(Book book)
     {
-        // var existingBook = await GetByIsbnAsync(book.Isbn);
-        // if (existingBook is not null)
-        // {
-        //     return false;
-        // }
+        var existingBook = await GetByIsbnAsync(book.Isbn);
+        if (existingBook is not null)
+        {
+            return false;
+        }
 
         using var connection = await dbConnectionFactory.CreateConnectionAsync();
         var result = await connection.ExecuteAsync("""
@@ -42,9 +42,21 @@ public class BookService(IDbConnectionFactory dbConnectionFactory) : IBookServic
             new { SearchTerm = $"%{searchTerm}%" });
     }
 
-    public Task<bool> UpdateAsync(Book book)
+    public async Task<bool> UpdateAsync(Book book)
     {
-        throw new NotImplementedException();
+        using var connection = await dbConnectionFactory.CreateConnectionAsync();
+        var existingBook = await GetByIsbnAsync(book.Isbn);
+        if (existingBook is null)
+        {
+            return false;
+        }
+        
+        var result = await connection.ExecuteAsync("""
+                                                   UPDATE Books
+                                                   SET Title = @Title, Author = @Author, ShortDescription = @ShortDescription, PageCount = @PageCount, ReleaseDate = @ReleaseDate
+                                                   WHERE Isbn = @Isbn;
+                                                   """, book);
+        return result > 0;
     }
 
     public Task<bool> DeleteAsync(string isbn)
