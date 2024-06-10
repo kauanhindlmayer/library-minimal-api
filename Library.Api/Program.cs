@@ -27,7 +27,7 @@ app.MapPost("books", async (Book book, IBookService bookService, IValidator<Book
     {
         return Results.BadRequest(validationResult.Errors);
     }
-    
+
     var created = await bookService.CreateAsync(book);
     if (!created)
     {
@@ -36,7 +36,7 @@ app.MapPost("books", async (Book book, IBookService bookService, IValidator<Book
             new("Isbn", "A book with the same ISBN already exists")
         });
     }
-    
+
     return Results.Created($"books/{book.Isbn}", book);
 });
 
@@ -47,6 +47,7 @@ app.MapGet("books", async (IBookService bookService, string? searchTerm) =>
         var matchedBooks = await bookService.SearchByTitleAsync(searchTerm);
         return Results.Ok(matchedBooks);
     }
+
     var books = await bookService.GetAllAsync();
     return Results.Ok(books);
 });
@@ -68,6 +69,12 @@ app.MapPost("books/{isbn}", async (string isbn, Book book, IBookService bookServ
 
     var updated = await bookService.UpdateAsync(book);
     return updated ? Results.Ok(book) : Results.NotFound();
+});
+
+app.MapDelete("books/{isbn}", async (string isbn, IBookService bookService) =>
+{
+    var deleted = await bookService.DeleteAsync(isbn);
+    return deleted ? Results.NoContent() : Results.NotFound();
 });
 
 var databaseInitializer = app.Services.GetRequiredService<DatabaseInitializer>();

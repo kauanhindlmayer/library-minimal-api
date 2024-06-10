@@ -59,8 +59,10 @@ public class BookService(IDbConnectionFactory dbConnectionFactory) : IBookServic
         return result > 0;
     }
 
-    public Task<bool> DeleteAsync(string isbn)
+    public async Task<bool> DeleteAsync(string isbn)
     {
-        throw new NotImplementedException();
+        using var connection = await dbConnectionFactory.CreateConnectionAsync();
+        var result = await connection.ExecuteAsync("DELETE FROM Books WHERE Isbn = @Isbn", new { Isbn = isbn });
+        return result > 0;
     }
 }
