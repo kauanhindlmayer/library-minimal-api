@@ -27,9 +27,10 @@ public class BookService(IDbConnectionFactory dbConnectionFactory) : IBookServic
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Book>> GetAllAsync()
+    public async Task<IEnumerable<Book>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        using var connection = await dbConnectionFactory.CreateConnectionAsync();
+        return await connection.QueryAsync<Book>("SELECT * FROM Books");
     }
 
     public Task<IEnumerable<Book>> SearchByTitleAsync(string searchTerm)
