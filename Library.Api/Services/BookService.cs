@@ -16,16 +16,17 @@ public class BookService(IDbConnectionFactory dbConnectionFactory) : IBookServic
 
         using var connection = await dbConnectionFactory.CreateConnectionAsync();
         var result = await connection.ExecuteAsync("""
-                                      INSERT INTO Books (Isbn, Title, Author, ShortDescription, PageCount, ReleaseDate)
-                                      VALUES (@Isbn, @Title, @Author, @ShortDescription, @PageCount, @ReleaseDate);
-                                      """, book);
+                                                   INSERT INTO Books (Isbn, Title, Author, ShortDescription, PageCount, ReleaseDate)
+                                                   VALUES (@Isbn, @Title, @Author, @ShortDescription, @PageCount, @ReleaseDate);
+                                                   """, book);
         return result > 0;
     }
 
     public async Task<Book?> GetByIsbnAsync(string isbn)
     {
         using var connection = await dbConnectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<Book>("SELECT * FROM Books WHERE Isbn = @Isbn LIMIT 1", new { Isbn = isbn });
+        return await connection.QueryFirstOrDefaultAsync<Book>("SELECT * FROM Books WHERE Isbn = @Isbn LIMIT 1",
+            new { Isbn = isbn });
     }
 
     public async Task<IEnumerable<Book>> GetAllAsync()
@@ -34,9 +35,11 @@ public class BookService(IDbConnectionFactory dbConnectionFactory) : IBookServic
         return await connection.QueryAsync<Book>("SELECT * FROM Books");
     }
 
-    public Task<IEnumerable<Book>> SearchByTitleAsync(string searchTerm)
+    public async Task<IEnumerable<Book>> SearchByTitleAsync(string searchTerm)
     {
-        throw new NotImplementedException();
+        using var connection = await dbConnectionFactory.CreateConnectionAsync();
+        return await connection.QueryAsync<Book>("SELECT * FROM Books WHERE Title LIKE @SearchTerm",
+            new { SearchTerm = $"%{searchTerm}%" });
     }
 
     public Task<bool> UpdateAsync(Book book)
