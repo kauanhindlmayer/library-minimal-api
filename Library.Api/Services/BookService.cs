@@ -22,9 +22,10 @@ public class BookService(IDbConnectionFactory dbConnectionFactory) : IBookServic
         return result > 0;
     }
 
-    public Task<Book?> GetByIsbnAsync(string isbn)
+    public async Task<Book?> GetByIsbnAsync(string isbn)
     {
-        throw new NotImplementedException();
+        using var connection = await dbConnectionFactory.CreateConnectionAsync();
+        return await connection.QueryFirstOrDefaultAsync<Book>("SELECT * FROM Books WHERE Isbn = @Isbn LIMIT 1", new { Isbn = isbn });
     }
 
     public async Task<IEnumerable<Book>> GetAllAsync()

@@ -46,6 +46,12 @@ app.MapGet("books", async (IBookService bookService) =>
     return Results.Ok(books);
 });
 
+app.MapGet("books/{isbn}", async (string isbn, IBookService bookService) =>
+{
+    var book = await bookService.GetByIsbnAsync(isbn);
+    return book is not null ? Results.Ok(book) : Results.NotFound();
+});
+
 var databaseInitializer = app.Services.GetRequiredService<DatabaseInitializer>();
 await databaseInitializer.InitializeAsync();
 
